@@ -32,6 +32,7 @@ class CommandCandidate:
 
 @dataclass
 class ParsedHelp:
+    header: str = ""
     usage: str = ""
     description: str = ""
     candidates: list[CommandCandidate] = field(default_factory=list)
@@ -41,6 +42,7 @@ class ParsedHelp:
 @dataclass
 class CommandNode:
     path: list[str]
+    header: str = ""
     usage: str = ""
     description: str = ""
     candidates: list[CommandCandidate] = field(default_factory=list)
@@ -57,6 +59,7 @@ class CommandNode:
         data: dict[str, Any] = {
             "command": self.command,
             "path": self.path,
+            "header": self.header,
             "usage": self.usage,
             "description": self.description,
             "candidates": [candidate.to_dict() for candidate in self.candidates],

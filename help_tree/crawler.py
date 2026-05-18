@@ -70,6 +70,7 @@ class HelpCrawler:
         parsed = parse_help(output)
         node = CommandNode(
             path=path,
+            header=parsed.header,
             usage=parsed.usage,
             description=parsed.description,
             candidates=parsed.candidates,

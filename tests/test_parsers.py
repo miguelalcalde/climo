@@ -18,6 +18,7 @@ class ParserFixtureTests(unittest.TestCase):
         parsed = parse_fixture("example-gh.txt")
         commands = {candidate.name: candidate for candidate in parsed.candidates}
 
+        self.assertEqual(parsed.header, "Work seamlessly with GitHub from the command line.")
         self.assertEqual(parsed.usage, "gh <command> <subcommand> [flags]")
         self.assertIn("auth", commands)
         self.assertIn("repo", commands)
@@ -154,6 +155,8 @@ Global options:
     def test_options_are_extracted_as_canonical_flags(self) -> None:
         parsed = parse_help(
             """
+tool 1.2.3
+
 Usage: td task view [options] [ref]
 
 View task details
@@ -166,6 +169,7 @@ Options:
 """
         )
 
+        self.assertEqual(parsed.header, "tool 1.2.3")
         self.assertEqual(parsed.flags, ["--json", "--full", "--raw"])
 
     def test_long_option_alias_is_preferred_over_short_alias(self) -> None:

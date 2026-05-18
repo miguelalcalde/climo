@@ -39,6 +39,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.format == "json":
             output = json.dumps(
                 {
+                    "header": parsed.header,
                     "usage": parsed.usage,
                     "description": parsed.description,
                     "candidates": [candidate.to_dict() for candidate in parsed.candidates],
@@ -78,16 +79,18 @@ def main(argv: list[str] | None = None) -> int:
 
 def _render_parsed_markdown(name: str, parsed) -> str:
     lines = [f"# {name}", ""]
+    if parsed.header:
+        lines.extend([parsed.header, ""])
+    if parsed.description and parsed.description != parsed.header:
+        lines.extend([parsed.description, ""])
     if parsed.usage:
-        lines.extend(["```text", parsed.usage, "```", ""])
-    lines.append("```text")
+        lines.extend([parsed.usage, ""])
     for candidate in parsed.candidates:
         line = candidate.name
         description = " ".join(candidate.description.split())
         if description:
             line = f"{line} # {description}"
         lines.append(line)
-    lines.append("```")
     return "\n".join(lines) + "\n"
 
 

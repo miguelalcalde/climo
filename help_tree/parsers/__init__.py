@@ -33,6 +33,7 @@ HELP_FLAGS = {"-h", "--help", "-help"}
 def parse_help(text: str) -> ParsedHelp:
     normalized = normalize_help(text)
     parsed = ParsedHelp(
+        header=_extract_header(normalized),
         usage=_extract_usage(normalized),
         description=_extract_description(normalized),
         flags=_extract_flags(normalized),
@@ -45,6 +46,14 @@ def parse_help(text: str) -> ParsedHelp:
                 merged[candidate.name] = candidate
     parsed.candidates = list(merged.values())
     return parsed
+
+
+def _extract_header(text: str) -> str:
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped:
+            return stripped
+    return ""
 
 
 def _extract_usage(text: str) -> str:
