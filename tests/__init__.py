@@ -1,2 +1,1 @@
-"""Tests for help-tree."""
-
+"""Tests for climo."""

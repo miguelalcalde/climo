@@ -1,4 +1,4 @@
-"""Command-line interface for skill-tree."""
+"""Command-line interface for climo."""
 
 from __future__ import annotations
 
@@ -14,22 +14,19 @@ from help_tree.renderers.markdown import render_markdown
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="skill-tree")
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "crawl":
+        argv[0] = "generate"
+
+    parser = argparse.ArgumentParser(prog="climo")
+    subparsers = parser.add_subparsers(dest="command", required=True, metavar="{parse,generate}")
 
     parse_parser = subparsers.add_parser("parse", help="parse a captured help file")
     parse_parser.add_argument("file", type=Path)
     parse_parser.add_argument("--format", choices=("json", "markdown"), default="json")
 
-    crawl_parser = subparsers.add_parser("crawl", help="crawl a live CLI command")
-    crawl_parser.add_argument("root", help="root command, e.g. 'gh' or 'docker compose'")
-    crawl_parser.add_argument("--max-depth", type=int, default=3)
-    crawl_parser.add_argument("--max-nodes", type=int, default=250)
-    crawl_parser.add_argument("--timeout", type=float, default=3.0)
-    crawl_parser.add_argument("--format", choices=("json", "markdown"), default="json")
-    crawl_parser.add_argument("--include-raw", action="store_true")
-    crawl_parser.add_argument("--out", type=Path)
-    crawl_parser.add_argument("--debug-out", type=Path)
+    generate_parser = subparsers.add_parser("generate", help="generate a CLI command tree")
+    _add_generate_arguments(generate_parser)
 
     args = parser.parse_args(argv)
 
@@ -62,7 +59,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     crawler = HelpCrawler(options=options)
     node = crawler.crawl(args.root)
-    output = render_markdown(node) if args.format == "markdown" else render_json(node, include_raw=args.include_raw)
+    output_format = "markdown" if args.description else args.format
+    output = render_markdown(node) if output_format == "markdown" else render_json(node, include_raw=args.include_raw)
+    if args.description:
+        output = _render_skill_markdown(output, args.name or args.root.split()[0], args.description)
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(output, encoding="utf-8")
@@ -75,6 +75,19 @@ def main(argv: list[str] | None = None) -> int:
             encoding="utf-8",
         )
     return 0
+
+
+def _add_generate_arguments(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("root", help="root command, e.g. 'gh' or 'docker compose'")
+    parser.add_argument("--max-depth", type=int, default=3)
+    parser.add_argument("--max-nodes", type=int, default=250)
+    parser.add_argument("--timeout", type=float, default=3.0)
+    parser.add_argument("--format", choices=("json", "markdown"), default="json")
+    parser.add_argument("--include-raw", action="store_true")
+    parser.add_argument("--out", type=Path)
+    parser.add_argument("--debug-out", type=Path)
+    parser.add_argument("--name", help="skill name when writing a SKILL.md file")
+    parser.add_argument("--description", help="skill description; writes Markdown output with SKILL.md frontmatter")
 
 
 def _render_parsed_markdown(name: str, parsed) -> str:
@@ -92,6 +105,24 @@ def _render_parsed_markdown(name: str, parsed) -> str:
             line = f"{line} # {description}"
         lines.append(line)
     return "\n".join(lines) + "\n"
+
+
+def _render_skill_markdown(markdown: str, name: str, description: str) -> str:
+    lines = [
+        "---",
+        f"name: {_quote_yaml_scalar(name)}",
+        f"description: {_quote_yaml_scalar(description)}",
+        "---",
+        "",
+        markdown.rstrip(),
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def _quote_yaml_scalar(value: str) -> str:
+    escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{escaped}"'
 
 
 def _debug_payload(node, events, options):

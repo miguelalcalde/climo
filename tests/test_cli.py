@@ -34,7 +34,7 @@ class FakeCrawler:
 
 
 class CliTests(unittest.TestCase):
-    def test_help_uses_skill_tree_program_name(self) -> None:
+    def test_help_uses_climo_program_name(self) -> None:
         stdout = io.StringIO()
 
         with self.assertRaises(SystemExit) as raised:
@@ -42,7 +42,9 @@ class CliTests(unittest.TestCase):
                 cli.main(["--help"])
 
         self.assertEqual(raised.exception.code, 0)
-        self.assertIn("usage: skill-tree", stdout.getvalue())
+        self.assertIn("usage: climo", stdout.getvalue())
+        self.assertIn("generate", stdout.getvalue())
+        self.assertNotIn("crawl", stdout.getvalue())
 
     def test_parse_json_writes_header_usage_candidates_and_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -72,7 +74,7 @@ Options:
         self.assertEqual(payload["flags"], ["--json"])
         self.assertEqual(payload["candidates"][0]["name"], "add")
 
-    def test_crawl_writes_output_and_debug_manifest(self) -> None:
+    def test_generate_writes_output_and_debug_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             out_path = Path(tmpdir) / "tree.json"
             debug_path = Path(tmpdir) / "debug.json"
@@ -81,7 +83,7 @@ Options:
             with patch.object(cli, "HelpCrawler", FakeCrawler):
                 exit_code = cli.main(
                     [
-                        "crawl",
+                        "generate",
                         "tool",
                         "--max-depth",
                         "4",
@@ -105,6 +107,43 @@ Options:
         self.assertEqual(debug["nodes"], 2)
         self.assertEqual(debug["accepted"], 1)
         self.assertEqual(debug["rejected"], 1)
+
+    def test_generate_can_write_skill_markdown(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_path = Path(tmpdir) / "skills" / "tool" / "SKILL.md"
+            FakeCrawler.instances = []
+
+            with patch.object(cli, "HelpCrawler", FakeCrawler):
+                exit_code = cli.main(
+                    [
+                        "generate",
+                        "tool",
+                        "--out",
+                        str(out_path),
+                        "--description",
+                        "Use when working with the tool CLI.",
+                    ]
+                )
+
+            output = out_path.read_text(encoding="utf-8")
+
+        self.assertEqual(exit_code, 0)
+        self.assertTrue(output.startswith("---\n"))
+        self.assertIn('name: "tool"', output)
+        self.assertIn('description: "Use when working with the tool CLI."', output)
+        self.assertIn("# `tool`", output)
+        self.assertIn("tool add # Add a document", output)
+
+    def test_crawl_alias_still_works(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_path = Path(tmpdir) / "tree.json"
+            FakeCrawler.instances = []
+
+            with patch.object(cli, "HelpCrawler", FakeCrawler):
+                exit_code = cli.main(["crawl", "tool", "--out", str(out_path)])
+
+            self.assertEqual(exit_code, 0)
+            self.assertTrue(out_path.exists())
 
 
 if __name__ == "__main__":

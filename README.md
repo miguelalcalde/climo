@@ -1,7 +1,7 @@
-# Skill Tree
+# Climo
 
-Generate Markdown, JSON, or Codex skill files for CLI command trees by crawling
-help output recursively.
+Generate Markdown, JSON, or Codex skill files for CLI command trees from
+recursive help output.
 
 Most CLI tools expose help one command at a time:
 
@@ -11,7 +11,7 @@ gh auth --help
 gh auth login --help
 ```
 
-`skill-tree` experiments with turning that scattered help output into one
+`climo` experiments with turning that scattered help output into one
 structured artifact:
 
 ```text
@@ -30,8 +30,8 @@ document.
 
 ## Status
 
-This is an early public GitHub-hosted package. It is not published to PyPI; install
-it directly from this repository.
+This is an early package prepared for PyPI distribution. The public source repo
+is `https://github.com/miguelalcalde/climo`.
 
 Current parser coverage includes:
 
@@ -50,28 +50,42 @@ instead of subcommands, such as `python3`, `rg`, `ssh`, `tar`, and `rsync`.
 ## Requirements
 
 - Python 3
-- The CLI you want to crawl installed on `PATH`
+- The CLI you want to inspect installed on `PATH`
 
 No third-party Python dependencies are required.
 
 ## Install
 
-Install the latest public GitHub version with `uv`:
+Run without a persistent install:
 
 ```sh
-uv tool install git+https://github.com/miguelalcalde/document-help-tree.git
+uvx climo --help
+```
+
+Install the PyPI package as a uv tool:
+
+```sh
+uv tool install climo
 ```
 
 Or install it with `pipx`:
 
 ```sh
-pipx install git+https://github.com/miguelalcalde/document-help-tree.git
+pipx install climo
 ```
 
 After installation, run:
 
 ```sh
-skill-tree --help
+climo --help
+```
+
+Until the first PyPI release is available, use the GitHub source URL:
+
+```sh
+uvx --from git+https://github.com/miguelalcalde/climo.git climo --help
+uv tool install git+https://github.com/miguelalcalde/climo.git
+pipx install git+https://github.com/miguelalcalde/climo.git
 ```
 
 For local development from a checkout:
@@ -91,26 +105,26 @@ python3 -m help_tree --help
 Show the command help:
 
 ```sh
-skill-tree --help
+climo --help
 ```
 
 Parse a captured help file:
 
 ```sh
-skill-tree parse example-gh.txt --format markdown
-skill-tree parse fixtures/cargo-root.txt --format json
+climo parse example-gh.txt --format markdown
+climo parse fixtures/cargo-root.txt --format json
 ```
 
-Crawl a live command:
+Generate a tree from a live command:
 
 ```sh
-skill-tree crawl gh --max-depth 3 --max-nodes 100 --format markdown --out out/gh.md
+climo generate gh --max-depth 3 --max-nodes 100 --format markdown --out out/gh.md
 ```
 
-Crawl with a debug manifest:
+Generate with a debug manifest:
 
 ```sh
-skill-tree crawl docker \
+climo generate docker \
   --max-depth 2 \
   --max-nodes 100 \
   --format markdown \
@@ -123,14 +137,16 @@ validation, return codes, timeouts, parser source, and rejection reason.
 
 ## Skill Output
 
-The repo can also generate Codex-compatible skill folders from crawled CLI
-output. A valid skill requires a `SKILL.md` file with YAML frontmatter, so the
-build script wraps the crawled Markdown tree with the required metadata.
+The repo can also generate Codex-compatible skill files. A valid skill requires
+a `SKILL.md` file with YAML frontmatter, so `--description` wraps the generated
+Markdown tree with the required metadata.
 
 Generate the current Todoist CLI skill:
 
 ```sh
-npm run skills:td
+climo generate td \
+  --out skills/td/SKILL.md \
+  --description "A compact skill for Todoist CLI, use this when you want to find out how to use the CLI with simple examples"
 ```
 
 This writes:
@@ -140,8 +156,7 @@ skills/td/SKILL.md
 ```
 
 The generated folder can be pulled into a Codex skills directory as a pure skill
-tool. Add more package scripts following the same pattern in `package.json` when
-you want additional CLI skill outputs.
+tool. Use `npm run skills:td` to rebuild the checked-in Todoist skill.
 
 ## How It Works
 
@@ -162,7 +177,7 @@ from entering the final tree.
 Generate a GitHub CLI tree:
 
 ```sh
-skill-tree crawl gh \
+climo generate gh \
   --max-depth 3 \
   --max-nodes 120 \
   --format markdown \
@@ -173,7 +188,7 @@ skill-tree crawl gh \
 Generate a Cargo tree:
 
 ```sh
-skill-tree crawl cargo \
+climo generate cargo \
   --max-depth 1 \
   --format markdown \
   --out out/cargo-depth1.md
@@ -182,7 +197,7 @@ skill-tree crawl cargo \
 Generate PNPM documentation:
 
 ```sh
-skill-tree crawl pnpm \
+climo generate pnpm \
   --max-depth 1 \
   --format markdown \
   --out out/pnpm-depth1.md \
@@ -228,6 +243,12 @@ Run a syntax check without writing bytecode outside the repo:
 env PYTHONPYCACHEPREFIX=.pycache python3 -m compileall -q help_tree tests scripts
 ```
 
+Validate generated skills:
+
+```sh
+python3 scripts/validate_skills.py
+```
+
 The fixture precision tests assert both:
 
 - expected commands are extracted
@@ -236,18 +257,47 @@ The fixture precision tests assert both:
 That second point is important. For this project, avoiding hallucinated commands
 from option lists and prose is as important as finding real subcommands.
 
+## Contributing Skills
+
+Skill contributions live under `skills/<name>/SKILL.md`. See
+`CONTRIBUTING.md` for the PR checklist and the expected validation commands.
+
+## Publishing
+
+Releases are configured for PyPI Trusted Publishing through GitHub Actions. In
+PyPI, create the `climo` project and add a trusted publisher with:
+
+- owner: `miguelalcalde`
+- repository: `climo`
+- workflow: `publish.yml`
+- environment: `pypi`
+
+Then publish a release by pushing a version tag that matches the version in
+`pyproject.toml`:
+
+```sh
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+After the release is on PyPI, one-shot execution works with:
+
+```sh
+uvx climo --help
+```
+
 ## Output Formats
 
 Markdown is intended for humans:
 
 ```sh
-skill-tree crawl uv --format markdown --out out/uv.md
+climo generate uv --format markdown --out out/uv.md
 ```
 
 JSON is intended for downstream tooling:
 
 ```sh
-skill-tree crawl uv --format json --out out/uv.json
+climo generate uv --format json --out out/uv.json
 ```
 
 Use `--include-raw` if you want raw help text embedded in the JSON tree.
@@ -273,16 +323,21 @@ The preferred workflow for a new CLI is:
 2. Add include/exclude expectations in `tests/test_fixture_precision.py`.
 3. Run the tests and inspect parser misses.
 4. Add or tighten a parser under `help_tree/parsers/`.
-5. Add a bounded live crawl with `--debug-out` to check validation behavior.
+5. Add a bounded live generation with `--debug-out` to check validation behavior.
 
 Good next candidates include `vercel`, `go`, `curl`, `jq`, `ffmpeg`, and any
 niche CLIs with unusual help layouts.
 
 ## Known Limits
 
-- The package is installable from GitHub, but it is not published to PyPI.
 - Validation is serial, so very large trees can take time.
 - Some tools expose help topics rather than executable subcommands; the model
   does not yet distinguish all topic types.
 - Parser precision depends on fixture coverage. Add fixtures before broadening
   parser heuristics.
+- Generated skills should be reviewed before PR. If output looks wrong, add
+  fixture coverage and fix the parser rather than hand-editing large trees.
+
+## License
+
+MIT

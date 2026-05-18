@@ -1,6 +1,6 @@
 ---
 name: "td"
-description: "Use when working with the td Todoist CLI; provides the available td commands, subcommands, flags, and command descriptions."
+description: "A compact skill for Todoist CLI, use this when you want to find out how to use the CLI with simple examples"
 ---
 
 # `td`

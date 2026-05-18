@@ -1,10 +1,19 @@
 {
+  "name": "climo",
+  "version": "0.1.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miguelalcalde/climo.git"
+  },
   "bin": {
-    "skill-tree": "bin/skill-tree"
+    "climo": "bin/climo"
   },
   "scripts": {
-    "skill-tree": "node bin/skill-tree",
+    "climo": "node bin/climo",
+    "test": "python3 -m unittest discover -v",
     "skills:build": "npm run skills:td",
-    "skills:td": "python3 scripts/build_skill.py td --out skills/td/SKILL.md --name td --description \"Use when working with the td Todoist CLI; provides the available td commands, subcommands, flags, and command descriptions.\" --max-depth 3 --max-nodes 250"
+    "skills:validate": "python3 scripts/validate_skills.py",
+    "skills:td": "python3 scripts/build_skill.py td --out skills/td/SKILL.md --name td --description \"A compact skill for Todoist CLI, use this when you want to find out how to use the CLI with simple examples\" --max-depth 3 --max-nodes 250"
   }
 }

@@ -1,0 +1,4 @@
+prune tests
+prune fixtures
+prune out
+prune skills
