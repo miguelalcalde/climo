@@ -79,9 +79,14 @@ def _render_parsed_markdown(name: str, parsed) -> str:
     lines = [f"# {name}", ""]
     if parsed.usage:
         lines.extend(["```text", parsed.usage, "```", ""])
-    lines.extend(["| Command | Section | Description | Source |", "|---|---|---|---|"])
+    lines.append("```text")
     for candidate in parsed.candidates:
-        lines.append(f"| `{candidate.name}` | {candidate.section} | {candidate.description} | {candidate.source} |")
+        line = candidate.name
+        description = " ".join(candidate.description.split())
+        if description:
+            line = f"{line} # {description}"
+        lines.append(line)
+    lines.append("```")
     return "\n".join(lines) + "\n"
 
 
