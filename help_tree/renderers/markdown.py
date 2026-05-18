@@ -18,12 +18,12 @@ def render_markdown(node: CommandNode) -> str:
 def _command_lines(node: CommandNode) -> list[str]:
     nodes = node.children or [node]
     lines: list[str] = []
-    for child in nodes:
-        lines.extend(_command_lines_from_node(child))
+    for index, child in enumerate(nodes):
+        lines.extend(_command_lines_from_node(child, "", index == len(nodes) - 1))
     return lines
 
 
-def _command_lines_from_node(node: CommandNode) -> list[str]:
+def _command_lines_from_node(node: CommandNode, prefix: str, is_last: bool) -> list[str]:
     line = node.command
     if node.flags:
         line = f"{line} [{','.join(node.flags)}]"
@@ -31,9 +31,10 @@ def _command_lines_from_node(node: CommandNode) -> list[str]:
     if description:
         line = f"{line} # {description}"
 
-    lines = [line]
-    for child in node.children:
-        lines.extend(_command_lines_from_node(child))
+    lines = [f"{prefix}{'└── ' if is_last else '├── '}{line}"]
+    child_prefix = prefix + ("    " if is_last else "│   ")
+    for index, child in enumerate(node.children):
+        lines.extend(_command_lines_from_node(child, child_prefix, index == len(node.children) - 1))
     return lines
 
 

@@ -36,11 +36,11 @@ class MarkdownRendererTests(unittest.TestCase):
 Top-level help
 
 ```text
-td add # Add a document
-td changelog # Show changes
-td hc # Help center commands
-td hc locales [--json,--raw] # List locales
-td hc view
+├── td add # Add a document
+├── td changelog # Show changes
+└── td hc # Help center commands
+    ├── td hc locales [--json,--raw] # List locales
+    └── td hc view
 ```
 """,
         )
@@ -55,7 +55,7 @@ td hc view
 Top-level help
 
 ```text
-td # Top-level help
+└── td # Top-level help
 ```
 """,
         )
