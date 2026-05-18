@@ -1,0 +1,110 @@
+[
+  {
+    "argv": [
+      "python3",
+      "--help"
+    ],
+    "available": true,
+    "bytes": 5821,
+    "executable": "/usr/bin/python3",
+    "name": "python3-root",
+    "output": "fixtures/python3-root.txt",
+    "returncode": 0
+  },
+  {
+    "argv": [
+      "pip3",
+      "--help"
+    ],
+    "available": true,
+    "bytes": 3749,
+    "executable": "/usr/bin/pip3",
+    "name": "pip3-root",
+    "output": "fixtures/pip3-root.txt",
+    "returncode": 0
+  },
+  {
+    "argv": [
+      "cargo",
+      "--help"
+    ],
+    "available": true,
+    "bytes": 2101,
+    "executable": "/opt/homebrew/bin/cargo",
+    "name": "cargo-root",
+    "output": "fixtures/cargo-root.txt",
+    "returncode": 0
+  },
+  {
+    "argv": [
+      "rg",
+      "--help"
+    ],
+    "available": true,
+    "bytes": 74401,
+    "executable": "/Users/miguel/.dotfiles/configs/.nvm/versions/node/v24.15.0/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/path/rg",
+    "name": "rg-root",
+    "output": "fixtures/rg-root.txt",
+    "returncode": 0
+  },
+  {
+    "argv": [
+      "pnpm",
+      "--help"
+    ],
+    "available": true,
+    "bytes": 3209,
+    "executable": "/opt/homebrew/bin/pnpm",
+    "name": "pnpm-root",
+    "output": "fixtures/pnpm-root.txt",
+    "returncode": 0
+  },
+  {
+    "argv": [
+      "openssl",
+      "help"
+    ],
+    "available": true,
+    "bytes": 2274,
+    "executable": "/usr/bin/openssl",
+    "name": "openssl-root",
+    "output": "fixtures/openssl-root.txt",
+    "returncode": 0
+  },
+  {
+    "argv": [
+      "ssh",
+      "-h"
+    ],
+    "available": true,
+    "bytes": 527,
+    "executable": "/usr/bin/ssh",
+    "name": "ssh-root",
+    "output": "fixtures/ssh-root.txt",
+    "returncode": 255
+  },
+  {
+    "argv": [
+      "tar",
+      "--help"
+    ],
+    "available": true,
+    "bytes": 1137,
+    "executable": "/usr/bin/tar",
+    "name": "tar-root",
+    "output": "fixtures/tar-root.txt",
+    "returncode": 0
+  },
+  {
+    "argv": [
+      "rsync",
+      "--help"
+    ],
+    "available": true,
+    "bytes": 1349,
+    "executable": "/usr/bin/rsync",
+    "name": "rsync-root",
+    "output": "fixtures/rsync-root.txt",
+    "returncode": 0
+  }
+]

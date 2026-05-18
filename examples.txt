@@ -1,0 +1,366 @@
+npm <command>
+
+Usage:
+
+npm install        install all the dependencies in your project
+npm install <foo>  add the <foo> dependency to your project
+npm test           run this project's tests
+npm run <foo>      run the script named <foo>
+npm <command> -h   quick help on <command>
+npm -l             display usage info for all commands
+npm help <term>    search for help on <term>
+npm help npm       more involved overview
+
+All commands:
+
+    access, adduser, audit, bugs, cache, ci, completion,
+    config, dedupe, deprecate, diff, dist-tag, docs, doctor,
+    edit, exec, explain, explore, find-dupes, fund, get, help,
+    help-search, init, install, install-ci-test, install-test,
+    link, ll, login, logout, ls, org, outdated, owner, pack,
+    ping, pkg, prefix, profile, prune, publish, query, rebuild,
+    repo, restart, root, run, sbom, search, set, shrinkwrap,
+    star, stars, start, stop, team, test, token, trust,
+    undeprecate, uninstall, unpublish, unstar, update, version,
+    view, whoami
+
+Specify configs in the ini-formatted file:
+    /Users/miguel/.npmrc
+or on the command line via: npm <command> --key=value
+
+More configuration info: npm help config
+Configuration fields: npm help 7 config
+
+npm@11.12.1 /Users/miguel/.dotfiles/configs/.nvm/versions/node/v24.15.0/lib/node_modules/npm
+[94;1mUsage:[0m gog <command> [flags]
+[95;1mBuild: 0.16.0 (Homebrew)[0m
+
+Google CLI for
+Gmail/Calendar/Chat/Classroom/Drive/Contacts/Tasks/Sheets/Docs/Slides/People/Forms/Meet/App
+Script/Analytics/Search Console/Ads/Groups/Admin/Keep/YouTube
+
+[95;1mConfig:[0m
+
+    file: /Users/miguel/Library/Application Support/gogcli/config.json
+    keyring backend: auto (source: default)
+
+[95;1mFlags:[0m
+  -h, --help                   Show context-sensitive help.
+      --color="auto"           Color output: auto|always|never
+  -a, --account=STRING         Account email for API commands
+                               (gmail/calendar/chat/classroom/drive/docs/slides/contacts/tasks/people/sheets/forms/sites/appscript/analytics/searchconsole/ads)
+      --client=""              OAuth client name (selects stored credentials +
+                               token bucket)
+      --access-token=STRING    Use provided access token directly (bypasses
+                               stored refresh tokens; token expires in ~1h)
+                               ($GOG_ACCESS_TOKEN)
+      --enable-commands=""     Comma-separated list of enabled commands;
+                               dot paths allowed (restricts CLI)
+      --disable-commands=""    Comma-separated list of disabled commands;
+                               dot paths allowed
+      --gmail-no-send          Block Gmail send operations (agent safety)
+  -j, --json                   Output JSON to stdout (best for scripting)
+  -p, --plain                  Output stable, parseable text to stdout (TSV;
+                               no colors)
+      --results-only           In JSON mode, emit only the primary result (drops
+                               envelope fields like nextPageToken)
+      --select=STRING          In JSON mode, select comma-separated fields
+                               (best-effort; supports dot paths). Desire path:
+                               use --fields for most commands.
+  -n, --dry-run                Do not make changes; print intended actions and
+                               exit successfully
+  -y, --force                  Skip confirmations for destructive commands
+      --no-input               Never prompt; fail instead (useful for CI)
+  -v, --verbose                Enable verbose logging
+      --version                Print version and exit
+
+[95;1mCommands:[0m
+  [94;1msend[0m [37m[flags][0m
+    [37mSend an email (alias for 'gmail send')[0m
+
+  [94;1mls[0m (list) [37m[flags][0m
+    [37mList Drive files (alias for 'drive ls')[0m
+
+  [94;1msearch[0m (find) [37m<[0mquery[37m>[0m ... [37m[flags][0m
+    [37mSearch Drive files (alias for 'drive search')[0m
+
+  [94;1mopen[0m (browse) [37m<[0mtarget[37m>[0m [37m[flags][0m
+    [37mPrint a best-effort web URL for a Google URL/ID (offline)[0m
+
+  [94;1mdownload[0m (dl) [37m<[0mfileId[37m>[0m [37m[flags][0m
+    [37mDownload a Drive file (alias for 'drive download')[0m
+
+  [94;1mupload[0m (up,put) [37m<[0mlocalPath[37m>[0m [37m[flags][0m
+    [37mUpload a file to Drive (alias for 'drive upload')[0m
+
+  [94;1mlogin[0m [37m<[0memail[37m>[0m [37m[flags][0m
+    [37mAuthorize and store a refresh token (alias for 'auth add')[0m
+
+  [94;1mlogout[0m [37m<[0memail[37m>[0m [37m[flags][0m
+    [37mRemove a stored refresh token (alias for 'auth remove')[0m
+
+  [94;1mstatus[0m (st) [37m[flags][0m
+    [37mShow auth/config status (alias for 'auth status')[0m
+
+  [94;1mme[0m [37m[flags][0m
+    [37mShow your profile (alias for 'people me')[0m
+
+  [94;1mwhoami[0m (who-am-i) [37m[flags][0m
+    [37mShow your profile (alias for 'people me')[0m
+
+  [94;1mauth[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mAuth and credentials[0m
+
+  [94;1mbackup[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mEncrypted Google account backups[0m
+
+  [94;1mgroups[0m (group) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Groups[0m
+
+  [94;1madmin[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Workspace Admin (Directory API) - requires domain-wide delegation[0m
+
+  [94;1mdrive[0m (drv) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Drive[0m
+
+  [94;1mdocs[0m (doc) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Docs (export via Drive)[0m
+
+  [94;1mslides[0m (slide) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Slides[0m
+
+  [94;1mcalendar[0m (cal) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Calendar[0m
+
+  [94;1mclassroom[0m (class) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Classroom[0m
+
+  [94;1mtime[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mLocal time utilities[0m
+
+  [94;1mgmail[0m (mail,email) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGmail[0m
+
+  [94;1mchat[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Chat[0m
+
+  [94;1mcontacts[0m (contact) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Contacts[0m
+
+  [94;1mtasks[0m (task) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Tasks[0m
+
+  [94;1mpeople[0m (person) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle People[0m
+
+  [94;1mkeep[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Keep (Workspace only)[0m
+
+  [94;1msheets[0m (sheet) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Sheets[0m
+
+  [94;1mforms[0m (form) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Forms[0m
+
+  [94;1msites[0m (site) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Sites (Drive-backed)[0m
+
+  [94;1mmeet[0m (meeting) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Meet[0m
+
+  [94;1mappscript[0m (script,apps-script) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Apps Script[0m
+
+  [94;1manalytics[0m (ga) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Analytics[0m
+
+  [94;1msearchconsole[0m (gsc,search-console,webmasters) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Search Console[0m
+
+  [94;1myoutube[0m (yt) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mYouTube Data API (activities, videos, playlists, comments, channels)[0m
+
+  [94;1mconfig[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mManage configuration[0m
+
+  [94;1mexit-codes[0m (exitcodes) [37m[flags][0m
+    [37mPrint stable exit codes (alias for 'agent exit-codes')[0m
+
+  [94;1magent[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mAgent-friendly helpers[0m
+
+  [94;1mschema[0m (help-json,helpjson) [[37m<[0mcommand[37m>[0m ...] [37m[flags][0m
+    [37mMachine-readable command/flag schema[0m
+
+  [94;1mversion[0m [37m[flags][0m
+    [37mPrint version[0m
+
+  [94;1mcompletion[0m [37m<[0mshell[37m>[0m [37m[flags][0m
+    [37mGenerate shell completion scripts[0m
+
+
+Run "gog <command> --help" for more information on a command.
+Usage:  docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Common Commands:
+  run         Create and run a new container from an image
+  exec        Execute a command in a running container
+  ps          List containers
+  build       Build an image from a Dockerfile
+  bake        Build from a file
+  pull        Download an image from a registry
+  push        Upload an image to a registry
+  images      List images
+  login       Authenticate to a registry
+  logout      Log out from a registry
+  search      Search Docker Hub for images
+  version     Show the Docker version information
+  info        Display system-wide information
+
+Management Commands:
+  agent*      Docker AI Agent Runner
+  ai*         Docker AI Agent - Ask Gordon
+  builder     Manage builds
+  buildx*     Docker Buildx
+  checkpoint  Manage checkpoints
+  compose*    Docker Compose
+  container   Manage containers
+  context     Manage contexts
+  debug*      Get a shell into any image or container
+  desktop*    Docker Desktop commands
+  dhi*        CLI for managing Docker Hardened Images
+  extension*  Manages Docker extensions
+  image       Manage images
+  init*       Creates Docker-related starter files for your project
+  manifest    Manage Docker image manifests and manifest lists
+  mcp*        Docker MCP Plugin
+  model*      Docker Model Runner
+  network     Manage networks
+  offload*    Docker Offload
+  plugin      Manage plugins
+  sandbox*    Docker Sandbox
+  sbom*       View the packaged-based Software Bill Of Materials (SBOM) for an image
+  scout*      Docker Scout
+  system      Manage Docker
+  volume      Manage volumes
+
+Swarm Commands:
+  config      Manage Swarm configs
+  node        Manage Swarm nodes
+  secret      Manage Swarm secrets
+  service     Manage Swarm services
+  stack       Manage Swarm stacks
+  swarm       Manage Swarm
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  import      Import the contents from a tarball to create a filesystem image
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  wait        Block until one or more containers stop, then print their exit codes
+
+Global Options:
+      --config string      Location of client config files (default "/Users/miguel/.docker")
+  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default context set
+                           with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host string        Daemon socket to connect to
+  -l, --log-level string   Set the logging level ("debug", "info", "warn", "error", "fatal") (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default "/Users/miguel/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default "/Users/miguel/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default "/Users/miguel/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Run 'docker COMMAND --help' for more information on a command.
+
+For more help on how to use Docker, head to https://docs.docker.com/go/guides/
+Work seamlessly with GitHub from the command line.
+
+[0;1;39mUSAGE[0m
+  gh <command> <subcommand> [flags]
+
+[0;1;39mCORE COMMANDS[0m
+  auth:        Authenticate gh and git with GitHub
+  browse:      Open the repository in the browser
+  codespace:   Connect to and manage codespaces
+  gist:        Manage gists
+  issue:       Manage issues
+  org:         Manage organizations
+  pr:          Manage pull requests
+  project:     Work with GitHub Projects.
+  release:     Manage releases
+  repo:        Manage repositories
+
+[0;1;39mGITHUB ACTIONS COMMANDS[0m
+  cache:       Manage GitHub Actions caches
+  run:         View details about workflow runs
+  workflow:    View details about GitHub Actions workflows
+
+[0;1;39mALIAS COMMANDS[0m
+  co:          Alias for "pr checkout"
+
+[0;1;39mADDITIONAL COMMANDS[0m
+  alias:       Create command shortcuts
+  api:         Make an authenticated GitHub API request
+  attestation: Work with artifact attestations
+  completion:  Generate shell completion scripts
+  config:      Manage configuration for gh
+  extension:   Manage gh extensions
+  gpg-key:     Manage GPG keys
+  label:       Manage labels
+  ruleset:     View info about repo rulesets
+  search:      Search for repositories, issues, and pull requests
+  secret:      Manage GitHub secrets
+  ssh-key:     Manage SSH keys
+  status:      Print information about relevant issues, pull requests, and notifications across repositories
+  variable:    Manage GitHub Actions variables
+
+[0;1;39mHELP TOPICS[0m
+  actions:     Learn about working with GitHub Actions
+  environment: Environment variables that can be used with gh
+  exit-codes:  Exit codes used by gh
+  formatting:  Formatting options for JSON data exported from gh
+  mintty:      Information about using gh with MinTTY
+  reference:   A comprehensive reference of all gh commands
+
+[0;1;39mFLAGS[0m
+  --help      Show help for command
+  --version   Show gh version
+
+[0;1;39mEXAMPLES[0m
+  $ gh issue create
+  $ gh repo clone cli/cli
+  $ gh pr checkout 321
+
+[0;1;39mLEARN MORE[0m
+  Use `gh <command> <subcommand> --help` for more information about a command.
+  Read the manual at https://cli.github.com/manual
+  Learn about exit codes using `gh help exit-codes`
+

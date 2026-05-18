@@ -1,0 +1,168 @@
+[94;1mUsage:[0m gog <command> [flags]
+[95;1mBuild: 0.16.0 (Homebrew)[0m
+
+Google CLI for
+Gmail/Calendar/Chat/Classroom/Drive/Contacts/Tasks/Sheets/Docs/Slides/People/Forms/Meet/App
+Script/Analytics/Search Console/Ads/Groups/Admin/Keep/YouTube
+
+[95;1mConfig:[0m
+
+    file: /Users/miguel/Library/Application Support/gogcli/config.json
+    keyring backend: auto (source: default)
+
+[95;1mFlags:[0m
+  -h, --help                   Show context-sensitive help.
+      --color="auto"           Color output: auto|always|never
+  -a, --account=STRING         Account email for API commands
+                               (gmail/calendar/chat/classroom/drive/docs/slides/contacts/tasks/people/sheets/forms/sites/appscript/analytics/searchconsole/ads)
+      --client=""              OAuth client name (selects stored credentials +
+                               token bucket)
+      --access-token=STRING    Use provided access token directly (bypasses
+                               stored refresh tokens; token expires in ~1h)
+                               ($GOG_ACCESS_TOKEN)
+      --enable-commands=""     Comma-separated list of enabled commands;
+                               dot paths allowed (restricts CLI)
+      --disable-commands=""    Comma-separated list of disabled commands;
+                               dot paths allowed
+      --gmail-no-send          Block Gmail send operations (agent safety)
+  -j, --json                   Output JSON to stdout (best for scripting)
+  -p, --plain                  Output stable, parseable text to stdout (TSV;
+                               no colors)
+      --results-only           In JSON mode, emit only the primary result (drops
+                               envelope fields like nextPageToken)
+      --select=STRING          In JSON mode, select comma-separated fields
+                               (best-effort; supports dot paths). Desire path:
+                               use --fields for most commands.
+  -n, --dry-run                Do not make changes; print intended actions and
+                               exit successfully
+  -y, --force                  Skip confirmations for destructive commands
+      --no-input               Never prompt; fail instead (useful for CI)
+  -v, --verbose                Enable verbose logging
+      --version                Print version and exit
+
+[95;1mCommands:[0m
+  [94;1msend[0m [37m[flags][0m
+    [37mSend an email (alias for 'gmail send')[0m
+
+  [94;1mls[0m (list) [37m[flags][0m
+    [37mList Drive files (alias for 'drive ls')[0m
+
+  [94;1msearch[0m (find) [37m<[0mquery[37m>[0m ... [37m[flags][0m
+    [37mSearch Drive files (alias for 'drive search')[0m
+
+  [94;1mopen[0m (browse) [37m<[0mtarget[37m>[0m [37m[flags][0m
+    [37mPrint a best-effort web URL for a Google URL/ID (offline)[0m
+
+  [94;1mdownload[0m (dl) [37m<[0mfileId[37m>[0m [37m[flags][0m
+    [37mDownload a Drive file (alias for 'drive download')[0m
+
+  [94;1mupload[0m (up,put) [37m<[0mlocalPath[37m>[0m [37m[flags][0m
+    [37mUpload a file to Drive (alias for 'drive upload')[0m
+
+  [94;1mlogin[0m [37m<[0memail[37m>[0m [37m[flags][0m
+    [37mAuthorize and store a refresh token (alias for 'auth add')[0m
+
+  [94;1mlogout[0m [37m<[0memail[37m>[0m [37m[flags][0m
+    [37mRemove a stored refresh token (alias for 'auth remove')[0m
+
+  [94;1mstatus[0m (st) [37m[flags][0m
+    [37mShow auth/config status (alias for 'auth status')[0m
+
+  [94;1mme[0m [37m[flags][0m
+    [37mShow your profile (alias for 'people me')[0m
+
+  [94;1mwhoami[0m (who-am-i) [37m[flags][0m
+    [37mShow your profile (alias for 'people me')[0m
+
+  [94;1mauth[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mAuth and credentials[0m
+
+  [94;1mbackup[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mEncrypted Google account backups[0m
+
+  [94;1mgroups[0m (group) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Groups[0m
+
+  [94;1madmin[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Workspace Admin (Directory API) - requires domain-wide delegation[0m
+
+  [94;1mdrive[0m (drv) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Drive[0m
+
+  [94;1mdocs[0m (doc) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Docs (export via Drive)[0m
+
+  [94;1mslides[0m (slide) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Slides[0m
+
+  [94;1mcalendar[0m (cal) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Calendar[0m
+
+  [94;1mclassroom[0m (class) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Classroom[0m
+
+  [94;1mtime[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mLocal time utilities[0m
+
+  [94;1mgmail[0m (mail,email) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGmail[0m
+
+  [94;1mchat[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Chat[0m
+
+  [94;1mcontacts[0m (contact) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Contacts[0m
+
+  [94;1mtasks[0m (task) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Tasks[0m
+
+  [94;1mpeople[0m (person) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle People[0m
+
+  [94;1mkeep[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Keep (Workspace only)[0m
+
+  [94;1msheets[0m (sheet) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Sheets[0m
+
+  [94;1mforms[0m (form) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Forms[0m
+
+  [94;1msites[0m (site) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Sites (Drive-backed)[0m
+
+  [94;1mmeet[0m (meeting) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Meet[0m
+
+  [94;1mappscript[0m (script,apps-script) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Apps Script[0m
+
+  [94;1manalytics[0m (ga) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Analytics[0m
+
+  [94;1msearchconsole[0m (gsc,search-console,webmasters) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mGoogle Search Console[0m
+
+  [94;1myoutube[0m (yt) [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mYouTube Data API (activities, videos, playlists, comments, channels)[0m
+
+  [94;1mconfig[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mManage configuration[0m
+
+  [94;1mexit-codes[0m (exitcodes) [37m[flags][0m
+    [37mPrint stable exit codes (alias for 'agent exit-codes')[0m
+
+  [94;1magent[0m [37m<[0mcommand[37m>[0m [37m[flags][0m
+    [37mAgent-friendly helpers[0m
+
+  [94;1mschema[0m (help-json,helpjson) [[37m<[0mcommand[37m>[0m ...] [37m[flags][0m
+    [37mMachine-readable command/flag schema[0m
+
+  [94;1mversion[0m [37m[flags][0m
+    [37mPrint version[0m
+
+  [94;1mcompletion[0m [37m<[0mshell[37m>[0m [37m[flags][0m
+    [37mGenerate shell completion scripts[0m
+
+
+Run "gog <command> --help" for more information on a command.
