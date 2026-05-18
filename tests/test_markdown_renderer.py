@@ -18,7 +18,11 @@ class MarkdownRendererTests(unittest.TestCase):
                     path=["td", "hc"],
                     description="Help center commands",
                     children=[
-                        CommandNode(path=["td", "hc", "locales"], description="List locales"),
+                        CommandNode(
+                            path=["td", "hc", "locales"],
+                            description="List locales",
+                            flags=["--json", "--raw"],
+                        ),
                         CommandNode(path=["td", "hc", "view"]),
                     ],
                 ),
@@ -35,7 +39,7 @@ Top-level help
 td add # Add a document
 td changelog # Show changes
 td hc # Help center commands
-td hc locales # List locales
+td hc locales [--json,--raw] # List locales
 td hc view
 ```
 """,

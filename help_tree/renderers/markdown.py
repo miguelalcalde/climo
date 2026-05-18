@@ -25,6 +25,8 @@ def _command_lines(node: CommandNode) -> list[str]:
 
 def _command_lines_from_node(node: CommandNode) -> list[str]:
     line = node.command
+    if node.flags:
+        line = f"{line} [{','.join(node.flags)}]"
     description = _inline_text(node.description)
     if description:
         line = f"{line} # {description}"

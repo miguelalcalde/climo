@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 from help_tree.ansi import normalize_help
 from help_tree.models import CommandCandidate, ParsedHelp
 from help_tree.parsers.brew_usage import BrewUsageParser
@@ -23,12 +25,17 @@ PARSERS = (
     OpenSSLInventoryParser(),
 )
 
+FLAG_RE = re.compile(r"(?<!\S)-{1,2}[A-Za-z0-9][A-Za-z0-9-]*")
+FLAG_SECTION_NAMES = {"options", "flags", "global options", "global flags"}
+HELP_FLAGS = {"-h", "--help", "-help"}
+
 
 def parse_help(text: str) -> ParsedHelp:
     normalized = normalize_help(text)
     parsed = ParsedHelp(
         usage=_extract_usage(normalized),
         description=_extract_description(normalized),
+        flags=_extract_flags(normalized),
     )
     merged: dict[str, CommandCandidate] = {}
     for parser in PARSERS:
@@ -61,3 +68,51 @@ def _extract_description(text: str) -> str:
             continue
         return stripped
     return ""
+
+
+def _extract_flags(text: str) -> list[str]:
+    flags: list[str] = []
+    seen: set[str] = set()
+    in_flag_section = False
+
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            continue
+
+        lowered = stripped.rstrip(":").lower()
+        if lowered in FLAG_SECTION_NAMES:
+            in_flag_section = True
+            continue
+
+        if in_flag_section and _is_non_flag_section_heading(stripped):
+            in_flag_section = False
+
+        if not in_flag_section or not stripped.startswith("-"):
+            continue
+
+        names = [name for name in FLAG_RE.findall(stripped) if name not in HELP_FLAGS]
+        if not names:
+            continue
+        flag = _canonical_flag_name(names)
+        if flag not in seen:
+            flags.append(flag)
+            seen.add(flag)
+
+    return flags
+
+
+def _is_non_flag_section_heading(stripped: str) -> bool:
+    if stripped.startswith("-"):
+        return False
+    lowered = stripped.rstrip(":").lower()
+    if lowered in FLAG_SECTION_NAMES:
+        return False
+    return stripped.endswith(":") or lowered in {"commands", "examples", "usage", "arguments"}
+
+
+def _canonical_flag_name(names: list[str]) -> str:
+    long_names = [name for name in names if name.startswith("--")]
+    if long_names:
+        return long_names[0]
+    return names[0]

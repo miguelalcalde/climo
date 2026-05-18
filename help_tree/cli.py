@@ -42,6 +42,7 @@ def main(argv: list[str] | None = None) -> int:
                     "usage": parsed.usage,
                     "description": parsed.description,
                     "candidates": [candidate.to_dict() for candidate in parsed.candidates],
+                    "flags": parsed.flags,
                 },
                 indent=2,
                 sort_keys=True,

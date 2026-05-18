@@ -73,6 +73,7 @@ class HelpCrawler:
             usage=parsed.usage,
             description=parsed.description,
             candidates=parsed.candidates,
+            flags=parsed.flags,
             raw_help=output if self.options.include_raw else "",
             validation=self._validation_metadata(result, output, parent_output),
         )

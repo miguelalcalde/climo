@@ -151,6 +151,36 @@ Global options:
         self.assertNotIn("Use", commands)
         self.assertNotIn("Control", commands)
 
+    def test_options_are_extracted_as_canonical_flags(self) -> None:
+        parsed = parse_help(
+            """
+Usage: td task view [options] [ref]
+
+View task details
+
+Options:
+  --json      Output as JSON
+  --full      Include all fields in output
+  --raw       Disable markdown rendering
+  -h, --help  display help for command
+"""
+        )
+
+        self.assertEqual(parsed.flags, ["--json", "--full", "--raw"])
+
+    def test_long_option_alias_is_preferred_over_short_alias(self) -> None:
+        parsed = parse_help(
+            """
+Usage: tool [options]
+
+Options:
+  -v, --verbose  Use verbose output
+  -q             Suppress output
+"""
+        )
+
+        self.assertEqual(parsed.flags, ["--verbose", "-q"])
+
 
 if __name__ == "__main__":
     unittest.main()

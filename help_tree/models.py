@@ -44,6 +44,7 @@ class CommandNode:
     usage: str = ""
     description: str = ""
     candidates: list[CommandCandidate] = field(default_factory=list)
+    flags: list[str] = field(default_factory=list)
     children: list["CommandNode"] = field(default_factory=list)
     raw_help: str = ""
     validation: dict[str, Any] = field(default_factory=dict)
@@ -59,10 +60,10 @@ class CommandNode:
             "usage": self.usage,
             "description": self.description,
             "candidates": [candidate.to_dict() for candidate in self.candidates],
+            "flags": self.flags,
             "children": [child.to_dict(include_raw=include_raw) for child in self.children],
             "validation": self.validation,
         }
         if include_raw:
             data["raw_help"] = self.raw_help
         return data
-
