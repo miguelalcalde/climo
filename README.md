@@ -1,7 +1,7 @@
-# Help Tree
+# Skill Tree
 
-Generate Markdown or JSON documentation for CLI command trees by crawling help
-output recursively.
+Generate Markdown, JSON, or Codex skill files for CLI command trees by crawling
+help output recursively.
 
 Most CLI tools expose help one command at a time:
 
@@ -11,7 +11,7 @@ gh auth --help
 gh auth login --help
 ```
 
-`help-tree` experiments with turning that scattered help output into one
+`skill-tree` experiments with turning that scattered help output into one
 structured artifact:
 
 ```text
@@ -30,8 +30,8 @@ document.
 
 ## Status
 
-This is an early local experiment. It is not packaged yet; run it directly with
-Python from this repository.
+This is an early public GitHub-hosted package. It is not published to PyPI; install
+it directly from this repository.
 
 Current parser coverage includes:
 
@@ -54,31 +54,63 @@ instead of subcommands, such as `python3`, `rg`, `ssh`, `tar`, and `rsync`.
 
 No third-party Python dependencies are required.
 
-## Usage
+## Install
 
-Show the local command help:
+Install the latest public GitHub version with `uv`:
+
+```sh
+uv tool install git+https://github.com/miguelalcalde/document-help-tree.git
+```
+
+Or install it with `pipx`:
+
+```sh
+pipx install git+https://github.com/miguelalcalde/document-help-tree.git
+```
+
+After installation, run:
+
+```sh
+skill-tree --help
+```
+
+For local development from a checkout:
+
+```sh
+uv tool install --editable .
+```
+
+or run the module directly:
 
 ```sh
 python3 -m help_tree --help
 ```
 
+## Usage
+
+Show the command help:
+
+```sh
+skill-tree --help
+```
+
 Parse a captured help file:
 
 ```sh
-python3 -m help_tree parse example-gh.txt --format markdown
-python3 -m help_tree parse fixtures/cargo-root.txt --format json
+skill-tree parse example-gh.txt --format markdown
+skill-tree parse fixtures/cargo-root.txt --format json
 ```
 
 Crawl a live command:
 
 ```sh
-python3 -m help_tree crawl gh --max-depth 3 --max-nodes 100 --format markdown --out out/gh.md
+skill-tree crawl gh --max-depth 3 --max-nodes 100 --format markdown --out out/gh.md
 ```
 
 Crawl with a debug manifest:
 
 ```sh
-python3 -m help_tree crawl docker \
+skill-tree crawl docker \
   --max-depth 2 \
   --max-nodes 100 \
   --format markdown \
@@ -88,6 +120,28 @@ python3 -m help_tree crawl docker \
 
 The debug manifest records accepted and rejected candidates, the argv used for
 validation, return codes, timeouts, parser source, and rejection reason.
+
+## Skill Output
+
+The repo can also generate Codex-compatible skill folders from crawled CLI
+output. A valid skill requires a `SKILL.md` file with YAML frontmatter, so the
+build script wraps the crawled Markdown tree with the required metadata.
+
+Generate the current Todoist CLI skill:
+
+```sh
+npm run skills:td
+```
+
+This writes:
+
+```text
+skills/td/SKILL.md
+```
+
+The generated folder can be pulled into a Codex skills directory as a pure skill
+tool. Add more package scripts following the same pattern in `package.json` when
+you want additional CLI skill outputs.
 
 ## How It Works
 
@@ -108,7 +162,7 @@ from entering the final tree.
 Generate a GitHub CLI tree:
 
 ```sh
-python3 -m help_tree crawl gh \
+skill-tree crawl gh \
   --max-depth 3 \
   --max-nodes 120 \
   --format markdown \
@@ -119,7 +173,7 @@ python3 -m help_tree crawl gh \
 Generate a Cargo tree:
 
 ```sh
-python3 -m help_tree crawl cargo \
+skill-tree crawl cargo \
   --max-depth 1 \
   --format markdown \
   --out out/cargo-depth1.md
@@ -128,7 +182,7 @@ python3 -m help_tree crawl cargo \
 Generate PNPM documentation:
 
 ```sh
-python3 -m help_tree crawl pnpm \
+skill-tree crawl pnpm \
   --max-depth 1 \
   --format markdown \
   --out out/pnpm-depth1.md \
@@ -187,13 +241,13 @@ from option lists and prose is as important as finding real subcommands.
 Markdown is intended for humans:
 
 ```sh
-python3 -m help_tree crawl uv --format markdown --out out/uv.md
+skill-tree crawl uv --format markdown --out out/uv.md
 ```
 
 JSON is intended for downstream tooling:
 
 ```sh
-python3 -m help_tree crawl uv --format json --out out/uv.json
+skill-tree crawl uv --format json --out out/uv.json
 ```
 
 Use `--include-raw` if you want raw help text embedded in the JSON tree.
@@ -226,10 +280,9 @@ niche CLIs with unusual help layouts.
 
 ## Known Limits
 
-- There is no package metadata or installable console script yet.
+- The package is installable from GitHub, but it is not published to PyPI.
 - Validation is serial, so very large trees can take time.
 - Some tools expose help topics rather than executable subcommands; the model
   does not yet distinguish all topic types.
 - Parser precision depends on fixture coverage. Add fixtures before broadening
   parser heuristics.
-

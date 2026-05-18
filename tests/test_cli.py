@@ -34,6 +34,16 @@ class FakeCrawler:
 
 
 class CliTests(unittest.TestCase):
+    def test_help_uses_skill_tree_program_name(self) -> None:
+        stdout = io.StringIO()
+
+        with self.assertRaises(SystemExit) as raised:
+            with contextlib.redirect_stdout(stdout):
+                cli.main(["--help"])
+
+        self.assertEqual(raised.exception.code, 0)
+        self.assertIn("usage: skill-tree", stdout.getvalue())
+
     def test_parse_json_writes_header_usage_candidates_and_flags(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             help_file = Path(tmpdir) / "tool.txt"

@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+
+const { dirname, join, resolve } = require("node:path");
+const { spawnSync } = require("node:child_process");
+
+const repoRoot = resolve(dirname(__dirname));
+const pythonPath = process.env.PYTHONPATH
+  ? `${repoRoot}:${process.env.PYTHONPATH}`
+  : repoRoot;
+
+const result = spawnSync(
+  "python3",
+  ["-m", "help_tree", ...process.argv.slice(2)],
+  {
+    cwd: repoRoot,
+    env: { ...process.env, PYTHONPATH: pythonPath },
+    stdio: "inherit",
+  }
+);
+
+if (result.error) {
+  console.error(result.error.message);
+  process.exit(1);
+}
+
+process.exit(result.status ?? 1);

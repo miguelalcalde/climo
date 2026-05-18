@@ -1,5 +1,9 @@
 {
+  "bin": {
+    "skill-tree": "bin/skill-tree"
+  },
   "scripts": {
+    "skill-tree": "node bin/skill-tree",
     "skills:build": "npm run skills:td",
     "skills:td": "python3 scripts/build_skill.py td --out skills/td/SKILL.md --name td --description \"Use when working with the td Todoist CLI; provides the available td commands, subcommands, flags, and command descriptions.\" --max-depth 3 --max-nodes 250"
   }

@@ -1,4 +1,4 @@
-"""Command-line interface for help-tree."""
+"""Command-line interface for skill-tree."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from help_tree.renderers.markdown import render_markdown
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="help-tree")
+    parser = argparse.ArgumentParser(prog="skill-tree")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     parse_parser = subparsers.add_parser("parse", help="parse a captured help file")
