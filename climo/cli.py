@@ -7,10 +7,10 @@ import json
 import sys
 from pathlib import Path
 
-from help_tree.crawler import CrawlOptions, HelpCrawler
-from help_tree.parsers import parse_help
-from help_tree.renderers.json_renderer import render_json
-from help_tree.renderers.markdown import render_markdown
+from climo.crawler import CrawlOptions, HelpCrawler
+from climo.parsers import parse_help
+from climo.renderers.json_renderer import render_json
+from climo.renderers.markdown import render_markdown
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -29,6 +29,9 @@ def main(argv: list[str] | None = None) -> int:
     _add_generate_arguments(generate_parser)
 
     args = parser.parse_args(argv)
+
+    if args.command == "generate":
+        _validate_generate_args(generate_parser, args)
 
     if args.command == "parse":
         text = args.file.read_text(encoding="utf-8")
@@ -59,9 +62,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     crawler = HelpCrawler(options=options)
     node = crawler.crawl(args.root)
-    output_format = "markdown" if args.description else args.format
+    skill_output = args.skill or bool(args.description)
+    output_format = "markdown" if skill_output else args.format
     output = render_markdown(node) if output_format == "markdown" else render_json(node, include_raw=args.include_raw)
-    if args.description:
+    if skill_output:
         output = _render_skill_markdown(output, args.name or args.root.split()[0], args.description)
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -87,7 +91,19 @@ def _add_generate_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--out", type=Path)
     parser.add_argument("--debug-out", type=Path)
     parser.add_argument("--name", help="skill name when writing a SKILL.md file")
-    parser.add_argument("--description", help="skill description; writes Markdown output with SKILL.md frontmatter")
+    parser.add_argument("--description", help="skill description for SKILL.md frontmatter")
+    parser.add_argument(
+        "--skill",
+        action="store_true",
+        help="write Markdown output as a Codex SKILL.md file; requires --name and --description",
+    )
+
+
+def _validate_generate_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> None:
+    if args.skill and not args.name:
+        parser.error("--skill requires --name")
+    if args.skill and not args.description:
+        parser.error("--skill requires --description")
 
 
 def _render_parsed_markdown(name: str, parsed) -> str:

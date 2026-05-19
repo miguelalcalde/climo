@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from help_tree.models import CommandNode
+from climo.models import CommandNode
 
 
 def render_markdown(node: CommandNode) -> str:

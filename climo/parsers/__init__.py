@@ -4,15 +4,15 @@ from __future__ import annotations
 
 import re
 
-from help_tree.ansi import normalize_help
-from help_tree.models import CommandCandidate, ParsedHelp
-from help_tree.parsers.brew_usage import BrewUsageParser
-from help_tree.parsers.comma_inventory import CommaInventoryParser
-from help_tree.parsers.git_common import GitCommonParser
-from help_tree.parsers.multiline_blocks import MultilineBlockParser
-from help_tree.parsers.openssl_inventory import OpenSSLInventoryParser
-from help_tree.parsers.pnpm_root import PnpmRootParser
-from help_tree.parsers.section_table import SectionTableParser
+from climo.ansi import normalize_help
+from climo.models import CommandCandidate, ParsedHelp
+from climo.parsers.brew_usage import BrewUsageParser
+from climo.parsers.comma_inventory import CommaInventoryParser
+from climo.parsers.git_common import GitCommonParser
+from climo.parsers.multiline_blocks import MultilineBlockParser
+from climo.parsers.openssl_inventory import OpenSSLInventoryParser
+from climo.parsers.pnpm_root import PnpmRootParser
+from climo.parsers.section_table import SectionTableParser
 
 
 PARSERS = (

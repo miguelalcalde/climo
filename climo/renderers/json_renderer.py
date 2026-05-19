@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-from help_tree.models import CommandNode
+from climo.models import CommandNode
 
 
 def render_json(node: CommandNode, include_raw: bool = False) -> str:

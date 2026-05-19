@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import re
 
-from help_tree.models import CommandCandidate
-from help_tree.parsers.base import is_probable_command_name
+from climo.models import CommandCandidate
+from climo.parsers.base import is_probable_command_name
 
 
 ROW_RE = re.compile(r"^\s{3,}(?P<name>[a-z][a-z0-9_.-]*)\s{2,}(?P<desc>.+?)\s*$")

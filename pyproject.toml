@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "climo"
-version = "0.1.0"
+version = "0.1.1"
 description = "Generate Markdown, JSON, or Codex skill files from CLI help trees."
 readme = "README.md"
 license = "MIT"
@@ -28,7 +28,7 @@ classifiers = [
 ]
 
 [project.scripts]
-climo = "help_tree.cli:main"
+climo = "climo.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/miguelalcalde/climo"
@@ -36,4 +36,4 @@ Repository = "https://github.com/miguelalcalde/climo"
 Issues = "https://github.com/miguelalcalde/climo/issues"
 
 [tool.setuptools.packages.find]
-include = ["help_tree*"]
+include = ["climo*"]

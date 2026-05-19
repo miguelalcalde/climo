@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Protocol
 
-from help_tree.models import CommandCandidate
+from climo.models import CommandCandidate
 
 
 COMMAND_NAME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9_.-]*\*?:?$")

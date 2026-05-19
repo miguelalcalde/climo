@@ -23,6 +23,6 @@ jobs:
       - name: Run tests
         run: python3 -m unittest discover -v
       - name: Compile check
-        run: python3 -m compileall -q help_tree tests scripts
+        run: python3 -m compileall -q climo tests scripts
       - name: Validate skills
         run: python3 scripts/validate_skills.py

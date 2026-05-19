@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import re
 
-from help_tree.models import CommandCandidate
-from help_tree.parsers.base import clean_command_name, is_probable_command_name, looks_like_heading, section_name
+from climo.models import CommandCandidate
+from climo.parsers.base import clean_command_name, is_probable_command_name, looks_like_heading, section_name
 
 
 ROW_RE = re.compile(

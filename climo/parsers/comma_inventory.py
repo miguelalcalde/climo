@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import re
 
-from help_tree.models import CommandCandidate
-from help_tree.parsers.base import is_probable_command_name
+from climo.models import CommandCandidate
+from climo.parsers.base import is_probable_command_name
 
 
 TOKEN_RE = re.compile(r"[A-Za-z][A-Za-z0-9_.-]*")

@@ -8,7 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from help_tree.cli import main as cli_main
+from climo.cli import main as cli_main
 
 
 def main() -> int:
@@ -27,6 +27,9 @@ def main() -> int:
         args.root,
         "--out",
         str(args.out),
+        "--skill",
+        "--name",
+        args.name or args.root.split()[0],
         "--description",
         args.description,
         "--max-depth",
@@ -36,8 +39,6 @@ def main() -> int:
         "--timeout",
         str(args.timeout),
     ]
-    if args.name:
-        argv.extend(["--name", args.name])
     return cli_main(argv)
 
 

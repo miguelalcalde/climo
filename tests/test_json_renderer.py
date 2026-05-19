@@ -3,8 +3,8 @@ from __future__ import annotations
 import json
 import unittest
 
-from help_tree.models import CommandNode
-from help_tree.renderers.json_renderer import render_json
+from climo.models import CommandNode
+from climo.renderers.json_renderer import render_json
 
 
 class JsonRendererTests(unittest.TestCase):

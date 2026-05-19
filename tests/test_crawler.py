@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import unittest
 
-from help_tree.crawler import CrawlOptions, HelpCrawler
-from help_tree.models import CommandCandidate
-from help_tree.runner import CommandResult
+from climo.crawler import CrawlOptions, HelpCrawler
+from climo.models import CommandCandidate
+from climo.runner import CommandResult
 
 
 ROOT_HELP = """Tool CLI

@@ -8,8 +8,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from help_tree import cli
-from help_tree.models import CommandNode
+from climo import cli
+from climo.models import CommandNode
 
 
 class FakeCrawler:
@@ -120,6 +120,9 @@ Options:
                         "tool",
                         "--out",
                         str(out_path),
+                        "--skill",
+                        "--name",
+                        "tool",
                         "--description",
                         "Use when working with the tool CLI.",
                     ]
@@ -133,6 +136,48 @@ Options:
         self.assertIn('description: "Use when working with the tool CLI."', output)
         self.assertIn("# `tool`", output)
         self.assertIn("tool add # Add a document", output)
+
+    def test_generate_skill_requires_name_and_description(self) -> None:
+        stderr = io.StringIO()
+
+        with self.assertRaises(SystemExit) as raised:
+            with contextlib.redirect_stderr(stderr):
+                cli.main(["generate", "tool", "--skill", "--description", "Use this skill."])
+
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("--skill requires --name", stderr.getvalue())
+
+        stderr = io.StringIO()
+
+        with self.assertRaises(SystemExit) as raised:
+            with contextlib.redirect_stderr(stderr):
+                cli.main(["generate", "tool", "--skill", "--name", "tool"])
+
+        self.assertEqual(raised.exception.code, 2)
+        self.assertIn("--skill requires --description", stderr.getvalue())
+
+    def test_generate_description_still_writes_legacy_skill_markdown(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_path = Path(tmpdir) / "skills" / "tool" / "SKILL.md"
+            FakeCrawler.instances = []
+
+            with patch.object(cli, "HelpCrawler", FakeCrawler):
+                exit_code = cli.main(
+                    [
+                        "generate",
+                        "tool",
+                        "--out",
+                        str(out_path),
+                        "--description",
+                        "Use when working with the tool CLI.",
+                    ]
+                )
+
+            output = out_path.read_text(encoding="utf-8")
+
+        self.assertEqual(exit_code, 0)
+        self.assertIn('name: "tool"', output)
+        self.assertIn('description: "Use when working with the tool CLI."', output)
 
     def test_crawl_alias_still_works(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

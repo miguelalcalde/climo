@@ -10,7 +10,7 @@ const pythonPath = process.env.PYTHONPATH
 
 const result = spawnSync(
   "python3",
-  ["-m", "help_tree", ...process.argv.slice(2)],
+  ["-m", "climo", ...process.argv.slice(2)],
   {
     cwd: repoRoot,
     env: { ...process.env, PYTHONPATH: pythonPath },

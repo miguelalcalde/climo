@@ -97,7 +97,7 @@ uv tool install --editable .
 or run the module directly:
 
 ```sh
-python3 -m help_tree --help
+python3 -m climo --help
 ```
 
 ## Usage
@@ -138,14 +138,17 @@ validation, return codes, timeouts, parser source, and rejection reason.
 ## Skill Output
 
 The repo can also generate Codex-compatible skill files. A valid skill requires
-a `SKILL.md` file with YAML frontmatter, so `--description` wraps the generated
-Markdown tree with the required metadata.
+a `SKILL.md` file with delimited YAML frontmatter, so `--skill` wraps the
+generated Markdown tree with the required metadata. The required frontmatter
+fields are `name` and `description`.
 
 Generate the current Todoist CLI skill:
 
 ```sh
 climo generate td \
   --out skills/td/SKILL.md \
+  --skill \
+  --name td \
   --description "A compact skill for Todoist CLI, use this when you want to find out how to use the CLI with simple examples"
 ```
 
@@ -240,7 +243,7 @@ python3 -m unittest discover -v
 Run a syntax check without writing bytecode outside the repo:
 
 ```sh
-env PYTHONPYCACHEPREFIX=.pycache python3 -m compileall -q help_tree tests scripts
+env PYTHONPYCACHEPREFIX=.pycache python3 -m compileall -q climo tests scripts
 ```
 
 Validate generated skills:
@@ -312,7 +315,7 @@ Most CLIs work with the default help strategy:
 ```
 
 Some tools need custom help strategies. Profiles live in
-`help_tree/profiles.py`. Current custom profiles include `npm`, `pnpm`, and
+`climo/profiles.py`. Current custom profiles include `npm`, `pnpm`, and
 `openssl`.
 
 ## Adding Parser Coverage
@@ -322,7 +325,7 @@ The preferred workflow for a new CLI is:
 1. Capture root help into `fixtures/<tool>-root.txt`.
 2. Add include/exclude expectations in `tests/test_fixture_precision.py`.
 3. Run the tests and inspect parser misses.
-4. Add or tighten a parser under `help_tree/parsers/`.
+4. Add or tighten a parser under `climo/parsers/`.
 5. Add a bounded live generation with `--debug-out` to check validation behavior.
 
 Good next candidates include `vercel`, `go`, `curl`, `jq`, `ffmpeg`, and any

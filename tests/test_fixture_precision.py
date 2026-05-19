@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from help_tree.parsers import parse_help
+from climo.parsers import parse_help
 
 
 ROOT = Path(__file__).resolve().parents[1]

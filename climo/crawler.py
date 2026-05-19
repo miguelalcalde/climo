@@ -6,11 +6,11 @@ import shlex
 from dataclasses import dataclass, field
 from typing import Any
 
-from help_tree.ansi import normalize_help
-from help_tree.models import CommandCandidate, CommandNode
-from help_tree.parsers import parse_help
-from help_tree.profiles import Profile, profile_for
-from help_tree.runner import CommandResult, CommandRunner, split_command
+from climo.ansi import normalize_help
+from climo.models import CommandCandidate, CommandNode
+from climo.parsers import parse_help
+from climo.profiles import Profile, profile_for
+from climo.runner import CommandResult, CommandRunner, split_command
 
 
 HELP_MARKERS = ("usage", "commands", "options", "flags", "help")

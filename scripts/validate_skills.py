@@ -32,7 +32,7 @@ def validate_skill(path: Path) -> list[str]:
         return [f"{path}: missing YAML frontmatter"]
 
     try:
-        _, frontmatter, body = text.split("---", 2)
+        frontmatter, body = split_frontmatter(text)
     except ValueError:
         return [f"{path}: malformed YAML frontmatter"]
 
@@ -48,6 +48,16 @@ def validate_skill(path: Path) -> list[str]:
     if path.parent.name != fields.get("name", path.parent.name):
         errors.append(f"{path}: frontmatter name does not match folder name")
     return errors
+
+
+def split_frontmatter(text: str) -> tuple[str, str]:
+    lines = text.splitlines(keepends=True)
+    for index, line in enumerate(lines[1:], start=1):
+        if line.strip() == "---":
+            frontmatter = "".join(lines[1:index])
+            body = "".join(lines[index + 1 :])
+            return frontmatter, body
+    raise ValueError("missing closing frontmatter delimiter")
 
 
 def parse_frontmatter(frontmatter: str) -> dict[str, str]:

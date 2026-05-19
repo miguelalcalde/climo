@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import unittest
 
-from help_tree.models import CommandNode
-from help_tree.renderers.markdown import render_markdown
+from climo.models import CommandNode
+from climo.renderers.markdown import render_markdown
 
 
 class MarkdownRendererTests(unittest.TestCase):

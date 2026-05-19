@@ -4,7 +4,7 @@ import subprocess
 import unittest
 from unittest.mock import patch
 
-from help_tree.runner import CommandResult, CommandRunner, split_command
+from climo.runner import CommandResult, CommandRunner, split_command
 
 
 class CommandRunnerTests(unittest.TestCase):
@@ -16,7 +16,7 @@ class CommandRunnerTests(unittest.TestCase):
     def test_run_returns_completed_process_output(self) -> None:
         completed = subprocess.CompletedProcess(["tool"], 0, stdout="out", stderr="err")
 
-        with patch("help_tree.runner.subprocess.run", return_value=completed) as run:
+        with patch("climo.runner.subprocess.run", return_value=completed) as run:
             result = CommandRunner(timeout_seconds=1.5).run(["tool", "--help"])
 
         self.assertEqual(result.returncode, 0)
@@ -29,7 +29,7 @@ class CommandRunnerTests(unittest.TestCase):
     def test_run_reports_timeout(self) -> None:
         timeout = subprocess.TimeoutExpired(["tool"], 0.01, output="partial", stderr="late")
 
-        with patch("help_tree.runner.subprocess.run", side_effect=timeout):
+        with patch("climo.runner.subprocess.run", side_effect=timeout):
             result = CommandRunner(timeout_seconds=0.01).run(["tool"])
 
         self.assertEqual(result.returncode, 124)
